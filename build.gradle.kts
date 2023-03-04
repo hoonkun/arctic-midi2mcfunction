@@ -11,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "lib", "include" to listOf("*.jar"))))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     testImplementation(kotlin("test"))
 }
 
