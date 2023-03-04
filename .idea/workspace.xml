@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d384430-f10d-41c0-85a5-3c64a29b32fc" name="Changes" comment="checkpoint: 더 간결하게!">
-      <change afterPath="$PROJECT_DIR$/_in/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticMidiParserListener.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticMinecraftFunctionConverter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9d384430-f10d-41c0-85a5-3c64a29b32fc" name="Changes" comment="checkpoint: 더 멋지게!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ArcticConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticConfiguration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ArcticMinecraftFunctionConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticMinecraftFunctionConverter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +84,7 @@
       <workItem from="1677797676690" duration="21929000" />
       <workItem from="1677833292163" duration="843000" />
       <workItem from="1677908192847" duration="1042000" />
-      <workItem from="1677919607586" duration="4669000" />
+      <workItem from="1677919607586" duration="5631000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint: 초기 기능 구현">
       <created>1677908686093</created>
@@ -105,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677909230856</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="checkpoint: 더 멋지게!">
+      <created>1677924318245</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677924318245</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +127,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="checkpoint: 초기 기능 구현" />
     <MESSAGE value="checkpoint: 더 간결하게!" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkpoint: 더 간결하게!" />
+    <MESSAGE value="checkpoint: 더 멋지게!" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkpoint: 더 멋지게!" />
   </component>
 </project>

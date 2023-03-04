@@ -18,17 +18,23 @@ private val tones = listOf(
 class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) {
 
     fun convert(listener: ArcticMidiParserListener) {
-        var result = ""
+        var result = "# minecraft function created by arctic.\n#\n"
 
         if (config.baseBlocks != null) {
             result += config.baseBlocks
                 .mapIndexed { track, baseBlock ->
-                    config.noteBlocks[track].joinToString("\n") {
-                        val block = "${it[0]} ${it[1] - 1} ${it[2]} $baseBlock"
-                        if (baseBlock == null) "#"
-                        else "execute unless block $block if entity @e[type=marker,name=_ArcticData_,scores={__electroman_initialized=1},limit=1] run setblock $block"
-                    }
+                    config.noteBlocks[track]
+                        .map {
+                            val coordinate = "${it[0]} ${it[1] - 1} ${it[2]}"
+                            val block = "$coordinate $baseBlock"
+
+                            if (baseBlock == null) "#"
+                            else "execute unless block $block if entity @e[type=marker,name=_ArcticData_,scores={__electroman_initialized=1},limit=1] run setblock $block"
+                        }
+                        .filter { it != "#" }
+                        .joinToString("\n")
                 }
+                .filter { it.isNotEmpty() }
                 .joinToString("\n")
             result += "\n"
         }

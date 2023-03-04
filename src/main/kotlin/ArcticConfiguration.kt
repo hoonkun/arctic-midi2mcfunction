@@ -6,8 +6,14 @@ import kotlinx.serialization.Serializable
 data class ArcticConfiguration(
     @SerialName("note_blocks")
     val noteBlocks: List<List<List<Int>>>,
+    @SerialName("power_blocks")
+    val powerBlocks: List<List<List<Int>>>,
     @SerialName("base_blocks")
     val baseBlocks: List<String?>? = null,
+    @SerialName("reduce_commands")
+    val reduce: Boolean,
+    @SerialName("include_initializer")
+    val includeInitializer: Boolean,
     @SerialName("input_name")
     val inputName: String,
     @SerialName("output_name")
