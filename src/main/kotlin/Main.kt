@@ -34,7 +34,7 @@ fun main() {
     println("midi parsed: total ${listener.notes.size} notes, will be played during ${listener.totalTicks} ticks.")
 
     println()
-    println("convert into ./out/${config.outputName}")
+    println("convert into ./_out/${config.outputName}")
 
     val converter = ArcticMinecraftFunctionConverter(config)
 
