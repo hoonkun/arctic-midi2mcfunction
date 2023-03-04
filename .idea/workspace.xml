@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9d384430-f10d-41c0-85a5-3c64a29b32fc" name="Changes" comment="checkpoint: 더 멋지게!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ArcticConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticConfiguration.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ArcticMinecraftFunctionConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticMinecraftFunctionConverter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +83,7 @@
       <workItem from="1677797676690" duration="21929000" />
       <workItem from="1677833292163" duration="843000" />
       <workItem from="1677908192847" duration="1042000" />
-      <workItem from="1677919607586" duration="5631000" />
+      <workItem from="1677919607586" duration="5977000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint: 초기 기능 구현">
       <created>1677908686093</created>
@@ -107,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677924318245</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix: 출력 파일에서의 일부 빈 주석 라인을 제거">
+      <created>1677925290170</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677925290171</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +134,7 @@
     <MESSAGE value="checkpoint: 초기 기능 구현" />
     <MESSAGE value="checkpoint: 더 간결하게!" />
     <MESSAGE value="checkpoint: 더 멋지게!" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkpoint: 더 멋지게!" />
+    <MESSAGE value="fix: 출력 파일에서의 일부 빈 주석 라인을 제거" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 출력 파일에서의 일부 빈 주석 라인을 제거" />
   </component>
 </project>

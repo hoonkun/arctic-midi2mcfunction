@@ -39,7 +39,8 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
             result += "\n"
         }
 
-        val noteCommands = mutableListOf<String>()
+        val noteBlockRef = mutableMapOf<String, Int>()
+        val playCommands = mutableListOf<String>()
         var queue = listener.notes.toList()
         for (tick in 0 until listener.totalTicks + 50) {
             val targets = queue.filter { it.time * 20 < tick }
@@ -53,6 +54,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                     val noteBlockIndexOfTone = ((noteBlockToneIndex + 12 * ((note.octave + 1) % 2).coerceAtLeast(0) + 6) % 24)
 
                     val (x, y, z) = config.noteBlocks[track][index]
+                    val coordinate = "${x}_${y}_${z}"
 
                     val selector = entity()
                         .select(
@@ -62,18 +64,23 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                             limit=1
                         )
 
-                    noteCommands.add(
-                        """
-                            execute if entity $selector run setblock $x $y $z note_block[note=$noteBlockIndexOfTone]
-                            execute if entity $selector run setblock $x $y ${z + 1} redstone_block
-                            execute if entity $selector run setblock $x $y ${z + 1} air
-                        """.trimIndent()
-                    )
+                    var commandChain = ""
+                    if (!config.reduce || noteBlockRef[coordinate] != noteBlockIndexOfTone) {
+                        commandChain += "execute if entity $selector run setblock $x $y $z note_block[note=$noteBlockIndexOfTone]\n"
+                    }
+                    commandChain += """
+                        execute if entity $selector run setblock $x $y ${z + 1} redstone_block
+                        execute if entity $selector run setblock $x $y ${z + 1} air
+                    """.trimIndent()
+
+                    playCommands.add(commandChain)
+
+                    noteBlockRef[coordinate] = noteBlockIndexOfTone
                 }
             }
         }
 
-        result += noteCommands.joinToString("\n")
+        result += playCommands.joinToString("\n")
         result += "\n"
 
         val selector = entity().select(type="marker", name="_ArcticData_", scores=mapOf("__electroman_initialized" to 1), limit=1)
