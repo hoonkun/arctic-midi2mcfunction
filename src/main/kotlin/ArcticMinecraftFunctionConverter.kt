@@ -18,7 +18,7 @@ private val tones = listOf(
 class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) {
 
     fun convert(listener: ArcticMidiParserListener) {
-        var result = "# minecraft function created by arctic.\n#\n"
+        var result = "# minecraft function created by apteryx.\n"
 
         if (config.baseBlocks != null) {
             result += config.baseBlocks
@@ -29,7 +29,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                             val block = "$coordinate $baseBlock"
 
                             if (baseBlock == null) "#"
-                            else "execute unless block $block if entity @e[type=marker,name=_ArcticData_,scores={__electroman_initialized=1},limit=1] run setblock $block"
+                            else "execute unless block $block if entity @e[type=marker,name=_ArcticData_,scores={__${config.internalName}_initialized=1},limit=1] run setblock $block"
                         }
                         .filter { it != "#" }
                         .joinToString("\n")
@@ -60,7 +60,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                         .select(
                             type="marker",
                             name="_ArcticData_",
-                            scores=mapOf("__electroman_initialized" to 1, "__electroman_time" to tick),
+                            scores=mapOf("__${config.internalName}_initialized" to 1, "__${config.internalName}_time" to tick),
                             limit=1
                         )
 
@@ -83,11 +83,11 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
         result += playCommands.joinToString("\n")
         result += "\n"
 
-        val selector = entity().select(type="marker", name="_ArcticData_", scores=mapOf("__electroman_initialized" to 1), limit=1)
+        val selector = entity().select(type="marker", name="_ArcticData_", scores=mapOf("__${config.internalName}_initialized" to 1), limit=1)
 
         val timeAddCommands = listOf(
-            "scoreboard players add $selector __electroman_time 1",
-            "execute if score $selector __electroman_time matches ${listener.totalTicks + 100} run scoreboard players set $selector __electroman_time 0"
+            "scoreboard players add $selector __${config.internalName}_time 1",
+            "execute if score $selector __${config.internalName}_time matches ${listener.totalTicks + 100} run scoreboard players set $selector __${config.internalName}_time 0"
         )
 
         result += timeAddCommands.joinToString("\n")
