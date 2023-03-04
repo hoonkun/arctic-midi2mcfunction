@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.system.exitProcess
 
 private val tones = listOf(
     listOf("C"),
@@ -68,29 +69,34 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                     val noteBlockToneIndex = tones.indexOfFirst { it.contains(note.tone) }
                     val noteBlockIndexOfTone = ((noteBlockToneIndex + 12 * ((note.octave + 1) % 2).coerceAtLeast(0) + 6) % 24)
 
-                    val (x, y, z) = config.noteBlocks[track][index]
-                    val coordinate = "${x}_${y}_${z}"
+                    try {
+                        val (x, y, z) = config.noteBlocks[track][index]
+                        val coordinate = "${x}_${y}_${z}"
 
-                    val selector = Entity
-                        .select(
-                            type="marker",
-                            name=MarkerEntity,
-                            scores=mapOf("__${config.internalName}_i" to 1, "__${config.internalName}_t" to tick),
-                            limit=1
-                        )
+                        val selector = Entity
+                            .select(
+                                type = "marker",
+                                name = MarkerEntity,
+                                scores = mapOf("__${config.internalName}_i" to 1, "__${config.internalName}_t" to tick),
+                                limit = 1
+                            )
 
-                    var commandChain = ""
-                    if (!config.reduce || noteBlockRef[coordinate] != noteBlockIndexOfTone) {
-                        commandChain += "execute if entity $selector run setblock $x $y $z note_block[note=$noteBlockIndexOfTone]\n"
-                    }
-                    commandChain += """
+                        var commandChain = ""
+                        if (!config.reduce || noteBlockRef[coordinate] != noteBlockIndexOfTone) {
+                            commandChain += "execute if entity $selector run setblock $x $y $z note_block[note=$noteBlockIndexOfTone]\n"
+                        }
+                        commandChain += """
                         execute if entity $selector run setblock $x $y ${z + 1} redstone_block
                         execute if entity $selector run setblock $x $y ${z + 1} air
                     """.trimIndent()
 
-                    playCommands.add(commandChain)
+                        playCommands.add(commandChain)
 
-                    noteBlockRef[coordinate] = noteBlockIndexOfTone
+                        noteBlockRef[coordinate] = noteBlockIndexOfTone
+                    } catch (e: IndexOutOfBoundsException) {
+                        println("error in converting phase: track[$track] must have more than $index note blocks, but ${config.noteBlocks[track].size} was given.")
+                        exitProcess(1)
+                    }
                 }
             }
         }
@@ -102,7 +108,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
 
         val timeAddCommands = listOf(
             "scoreboard players add $selector __${config.internalName}_t 1",
-            "execute if score $selector __${config.internalName}_t matches ${listener.totalTicks + 100} run scoreboard players set $selector __${config.internalName}_t 0"
+            "execute if score $selector __${config.internalName}_t matches ${listener.totalTicks + config.paddingEnd} run scoreboard players set $selector __${config.internalName}_t 0"
         )
 
         result += timeAddCommands.joinToString("\n")

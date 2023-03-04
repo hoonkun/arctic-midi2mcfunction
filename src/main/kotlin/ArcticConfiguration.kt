@@ -19,6 +19,8 @@ data class ArcticConfiguration(
     @SerialName("output_name")
     val outputName: String,
     @SerialName("internal_name")
-    val internalName: String
+    val internalName: String,
+    @SerialName("padding_end")
+    val paddingEnd: Int = 100
 )
 
