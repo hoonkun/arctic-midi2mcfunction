@@ -1,7 +1,7 @@
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// TODO: 초기화 스크립트 포함 여부, 레드스톤 블럭 설치 위치 설정 가능하게 할 것 / 커멘드 내 스코어보드 이름 설정 가능하게 할 것
+// TODO: 레드스톤 블럭 설치 위치 설정 가능하게 할 것
 @Serializable
 data class ArcticConfiguration(
     @SerialName("note_blocks")

@@ -15,10 +15,25 @@ private val tones = listOf(
     listOf("B"),
 )
 
+const val MarkerEntity = "kiwi"
+
 class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) {
 
     fun convert(listener: ArcticMidiParserListener) {
         var result = "# minecraft function created by apteryx.\n"
+
+        if (config.includeInitializer) {
+            val entity = Entity.select(type="marker", name=MarkerEntity)
+            val initialized = entity.copy(scores= mapOf("__${config.internalName}_i" to 1), limit= 1)
+            result += """
+                execute unless entity $entity run summon marker 0 0 0 {CustomName: "{\"text\": \"$MarkerEntity\"}"}
+                execute unless entity $initialized run scoreboard objectives add __${config.internalName}_t dummy
+                execute unless entity $initialized run scoreboard players set @e[type=marker,name=$MarkerEntity] __${config.internalName}_t 0
+                execute unless entity $initialized run scoreboard objectives add __${config.internalName}_i dummy
+                execute unless entity $initialized run scoreboard players set @e[type=marker,name=$MarkerEntity] __${config.internalName}_i 1
+            """.trimIndent()
+            result += "\n"
+        }
 
         if (config.baseBlocks != null) {
             result += config.baseBlocks
@@ -29,7 +44,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                             val block = "$coordinate $baseBlock"
 
                             if (baseBlock == null) "#"
-                            else "execute unless block $block if entity @e[type=marker,name=_ArcticData_,scores={__${config.internalName}_initialized=1},limit=1] run setblock $block"
+                            else "execute unless block $block if entity @e[type=marker,name=$MarkerEntity,scores={__${config.internalName}_i=1},limit=1] run setblock $block"
                         }
                         .filter { it != "#" }
                         .joinToString("\n")
@@ -56,11 +71,11 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                     val (x, y, z) = config.noteBlocks[track][index]
                     val coordinate = "${x}_${y}_${z}"
 
-                    val selector = entity()
+                    val selector = Entity
                         .select(
                             type="marker",
-                            name="_ArcticData_",
-                            scores=mapOf("__${config.internalName}_initialized" to 1, "__${config.internalName}_time" to tick),
+                            name=MarkerEntity,
+                            scores=mapOf("__${config.internalName}_i" to 1, "__${config.internalName}_t" to tick),
                             limit=1
                         )
 
@@ -83,11 +98,11 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
         result += playCommands.joinToString("\n")
         result += "\n"
 
-        val selector = entity().select(type="marker", name="_ArcticData_", scores=mapOf("__${config.internalName}_initialized" to 1), limit=1)
+        val selector = Entity.select(type="marker", name=MarkerEntity, scores=mapOf("__${config.internalName}_i" to 1), limit=1)
 
         val timeAddCommands = listOf(
-            "scoreboard players add $selector __${config.internalName}_time 1",
-            "execute if score $selector __${config.internalName}_time matches ${listener.totalTicks + 100} run scoreboard players set $selector __${config.internalName}_time 0"
+            "scoreboard players add $selector __${config.internalName}_t 1",
+            "execute if score $selector __${config.internalName}_t matches ${listener.totalTicks + 100} run scoreboard players set $selector __${config.internalName}_t 0"
         )
 
         result += timeAddCommands.joinToString("\n")
@@ -96,24 +111,26 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
         file.writeText(result)
     }
 
-    private fun entity(): Entity {
-        return Entity()
-    }
-
 }
 
-class Entity {
-    private var type: String? = null
-    private var name: String? = null
-    private var scores: Map<String, Int>? = null
+data class Entity constructor(
+    private var type: String? = null,
+    private var name: String? = null,
+    private var scores: Map<String, Int>? = null,
     private var limit: Int? = null
+) {
 
-    fun select(type: String? = null, name: String? = null, scores: Map<String, Int>? = null, limit: Int? = null): Entity {
-        this.type = type
-        this.name = name
-        this.scores = scores
-        this.limit = limit
-        return this
+    companion object {
+
+        fun select(
+            type: String? = null,
+            name: String? = null,
+            scores: Map<String, Int>? = null,
+            limit: Int? = null
+        ): Entity {
+            return Entity(type, name, scores, limit)
+        }
+
     }
 
     override fun toString(): String {
