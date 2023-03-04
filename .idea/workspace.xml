@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d384430-f10d-41c0-85a5-3c64a29b32fc" name="Changes" comment="checkpoint: 초기 기능 구현">
+    <list default="true" id="9d384430-f10d-41c0-85a5-3c64a29b32fc" name="Changes" comment="checkpoint: 더 간결하게!">
+      <change afterPath="$PROJECT_DIR$/_in/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticMidiParserListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ArcticMinecraftFunctionConverter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +23,13 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +70,6 @@
     <configuration name="default" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="midi2mcfunction.main" />
-      <option name="PROGRAM_PARAMETERS" value="--ti iron_block _ oak_wood --tc -2.0.2/-3.0.2/-4.0.2/-5.0.2 -1.0.2/1.0.2/0.0.2 2.0.2/3.0.2 --o electroman.mcfunction" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -76,7 +88,8 @@
       <workItem from="1677771199961" duration="6402000" />
       <workItem from="1677797676690" duration="21929000" />
       <workItem from="1677833292163" duration="843000" />
-      <workItem from="1677908192847" duration="978000" />
+      <workItem from="1677908192847" duration="1042000" />
+      <workItem from="1677919607586" duration="4669000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint: 초기 기능 구현">
       <created>1677908686093</created>
@@ -85,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677908686093</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="checkpoint: 더 간결하게!">
+      <created>1677909230856</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677909230856</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,6 +124,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="checkpoint: 초기 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkpoint: 초기 기능 구현" />
+    <MESSAGE value="checkpoint: 더 간결하게!" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkpoint: 더 간결하게!" />
   </component>
 </project>
