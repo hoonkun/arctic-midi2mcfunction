@@ -145,7 +145,7 @@ fun convert(notes: List<MinecraftNote>, config: McFunctionConfiguration, into: S
         notesByTrack.forEach { (track, notes) ->
             notes.forEachIndexed { index, note ->
                 val noteBlockToneIndex = tones.indexOfFirst { it.contains(note.tone) }
-                val noteBlockIndexOfTone = ((noteBlockToneIndex + 12 * (if (track == 0) note.octave - 3 else if (track == 1) note.octave - 2 else note.octave - 1).toInt().coerceAtLeast(0) + 6) % 24)
+                val noteBlockIndexOfTone = ((noteBlockToneIndex + 12 * ((note.octave + 1) % 2).coerceAtLeast(0) + 6) % 24)
 
                 val (x, y, z) = config.trackCoordinates[track][index]
 
