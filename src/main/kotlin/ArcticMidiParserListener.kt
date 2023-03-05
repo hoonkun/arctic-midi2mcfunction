@@ -12,11 +12,12 @@ data class ArcticNote(
 class ArcticMidiParserListener : MidiParserListener() {
 
     private var currentTime: Double = 0.0
-    private var currentTrack: Int = 0
+    private var currentTrack: Int = -1
     private var currentTimeMultiplier: Float = 1f
 
     val notes = mutableListOf<ArcticNote>()
     var totalTicks = 0
+    var totalTracks = 0
 
     override fun onTempoChanged(tempoBPM: Int) {
         super.onTempoChanged(tempoBPM)
@@ -34,8 +35,9 @@ class ArcticMidiParserListener : MidiParserListener() {
 
     override fun onTrackChanged(track: Byte) {
         super.onTrackChanged(track)
-        currentTrack = track.toInt()
+        currentTrack += 1
         currentTime = 0.0
+        totalTracks = currentTrack
     }
 
     override fun onNoteParsed(note: Note) {

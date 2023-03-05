@@ -62,7 +62,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
             val targets = queue.filter { it.time * 20 < tick }
             queue = queue.filter { it.time * 20 >= tick }
 
-            val notesByTrack = targets.groupBy { it.track }
+            val notesByTrack = targets.sortedBy { it.tone }.groupBy { it.track }
 
             notesByTrack.forEach { (track, notes) ->
                 notes.forEachIndexed { index, note ->
@@ -71,6 +71,9 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
 
                     try {
                         val (x, y, z) = config.noteBlocks[track][index]
+                        val (x1, y1, z1) = config.powerBlocks[track][index]
+                        val noteCoordinate = "$x $y $z"
+                        val powerCoordinate = "$x1 $y1 $z1"
                         val coordinate = "${x}_${y}_${z}"
 
                         val selector = Entity
@@ -83,12 +86,12 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
 
                         var commandChain = ""
                         if (!config.reduce || noteBlockRef[coordinate] != noteBlockIndexOfTone) {
-                            commandChain += "execute if entity $selector run setblock $x $y $z note_block[note=$noteBlockIndexOfTone]\n"
+                            commandChain += "execute if entity $selector run setblock $noteCoordinate note_block[note=$noteBlockIndexOfTone]\n"
                         }
                         commandChain += """
-                        execute if entity $selector run setblock $x $y ${z + 1} redstone_block
-                        execute if entity $selector run setblock $x $y ${z + 1} air
-                    """.trimIndent()
+                            execute if entity $selector run setblock $powerCoordinate redstone_block
+                            execute if entity $selector run setblock $powerCoordinate air
+                        """.trimIndent()
 
                         playCommands.add(commandChain)
 

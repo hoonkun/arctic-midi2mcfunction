@@ -31,7 +31,7 @@ fun main() {
     parser.addParserListener(listener)
     parser.parse(MidiSystem.getSequence(File("./_in/${config.inputName}")))
 
-    println("midi parsed: total ${listener.notes.size} notes, will be played during ${listener.totalTicks} ticks.")
+    println("midi parsed: total ${listener.notes.size} notes with ${listener.totalTracks} tracks, will be played during ${listener.totalTicks} ticks.")
 
     println()
     println("convert into ./_out/${config.outputName}")
