@@ -23,9 +23,10 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
     fun convert(listener: ArcticMidiParserListener) {
         var result = "# minecraft function created by apteryx.\n"
 
+        val entity = Entity.select(type="marker", name=MarkerEntity)
+        val initialized = entity.copy(scores= mapOf("__${config.internalName}_i" to 1), limit= 1)
+
         if (config.includeInitializer) {
-            val entity = Entity.select(type="marker", name=MarkerEntity)
-            val initialized = entity.copy(scores= mapOf("__${config.internalName}_i" to 1), limit= 1)
             result += """
                 execute unless entity $entity run summon marker 0 0 0 {CustomName: "{\"text\": \"$MarkerEntity\"}"}
                 execute unless entity $initialized run scoreboard objectives add __${config.internalName}_t dummy
@@ -88,10 +89,7 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
                         if (!config.reduce || noteBlockRef[coordinate] != noteBlockIndexOfTone) {
                             commandChain += "execute if entity $selector run setblock $noteCoordinate note_block[note=$noteBlockIndexOfTone]\n"
                         }
-                        commandChain += """
-                            execute if entity $selector run setblock $powerCoordinate redstone_block
-                            execute if entity $selector run setblock $powerCoordinate air
-                        """.trimIndent()
+                        commandChain += "execute if entity $selector run setblock $powerCoordinate redstone_block"
 
                         playCommands.add(commandChain)
 
@@ -107,11 +105,14 @@ class ArcticMinecraftFunctionConverter(private val config: ArcticConfiguration) 
         result += playCommands.joinToString("\n")
         result += "\n"
 
-        val selector = Entity.select(type="marker", name=MarkerEntity, scores=mapOf("__${config.internalName}_i" to 1), limit=1)
+        result += config.powerBlocks.flatten().joinToString("\n") {
+            "execute if block ${it[0]} ${it[1]} ${it[2]} redstone_block if entity $initialized run setblock ${it[0]} ${it[1]} ${it[2]} air"
+        }
+        result += "\n"
 
         val timeAddCommands = listOf(
-            "scoreboard players add $selector __${config.internalName}_t 1",
-            "execute if score $selector __${config.internalName}_t matches ${listener.totalTicks + config.paddingEnd} run scoreboard players set $selector __${config.internalName}_t 0"
+            "scoreboard players add $initialized __${config.internalName}_t 1",
+            "execute if score $initialized __${config.internalName}_t matches ${listener.totalTicks + config.paddingEnd} run scoreboard players set $initialized __${config.internalName}_t 0"
         )
 
         result += timeAddCommands.joinToString("\n")
