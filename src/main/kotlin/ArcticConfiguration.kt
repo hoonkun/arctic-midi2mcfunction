@@ -11,9 +11,9 @@ data class ArcticConfiguration(
     @SerialName("base_blocks")
     val baseBlocks: List<String?>? = null,
     @SerialName("reduce_commands")
-    val reduce: Boolean,
+    val reduce: Boolean = true,
     @SerialName("include_initializer")
-    val includeInitializer: Boolean,
+    val includeInitializer: Boolean = true,
     @SerialName("input_name")
     val inputName: String,
     @SerialName("output_name")
